@@ -1,0 +1,163 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="music_management.list">
+      <field name="name"></field>
+      <field name='model'>music_management.artista</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="nombre"/>
+          <field name="descripcion"/>
+          <field name="comision"/>
+          <field name="visitas"/>
+          <field name="imagen" widget="image" height="50" width="50"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="music_management.list2">
+      <field name="name"></field>
+      <field name='model'>music_management.album</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="nombre"/>
+          <field name="artista_id"/>
+          <field name="año"/>
+          <field name="visitas"/>
+          <field name="imagen" widget="image" height="50" width="50"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="music_management.list1">
+      <field name="name"></field>
+      <field name='model'>music_management.cancion</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="nombre"/>
+          <field name="album_id"/>
+          <field name="año"/>
+          <field name="visitas"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="music_management.list3">
+      <field name="name"></field>
+      <field name='model'>music_management.genero</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="nombre"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="music_management.list4">
+      <field name="name"></field>
+      <field name='model'>music_management.usuario</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="nombre"/>
+          <field name="subscripcion"/>
+        </tree>
+      </field>
+    </record>
+    <!--
+    <record model="ir.ui.view" id="music_management.list5">
+      <field name="name">grafico</field>
+      <field name='model'>music_management.artista</field>
+      <field name='type'>graph</field>
+      <field name="arch" type="xml">
+        <graph string="Visitas totales de los artista">
+          <field name="album_id" type="row"/>
+          <field name="nombre" type="col"/>
+        </graph>
+      </field>
+    </record>
+  -->
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="music_management.action_window">
+      <field name="name">Artistas</field>
+      <field name="res_model">music_management.artista</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <record model="ir.actions.act_window" id="music_management.action_window1">
+      <field name="name">Canciones</field>
+      <field name="res_model">music_management.cancion</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="music_management.action_window2">
+      <field name="name">Albums</field>
+      <field name="res_model">music_management.album</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="music_management.action_window3">
+      <field name="name">Generos Musicales</field>
+      <field name="res_model">music_management.genero</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="music_management.action_window4">
+      <field name="name">Usuarios</field>
+      <field name="res_model">music_management.usuario</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="music_management.action_window5">
+      <field name="name">Comision por artista</field>
+      <field name="res_model">music_management.artista</field>
+      <field name="view_mode">tree,graph</field>
+    </record>
+    <!-- server action to the one above -->
+
+    <record model="ir.actions.server" id="music_management.action_server">
+      <field name="name">music_management server</field>
+      <field name="model_id" ref="model_music_management_artista"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": self._name,
+        }
+      </field>
+    </record>
+
+
+    <!-- Top menu item -->
+
+    <menuitem name="Musica" id="music_management.menu_root"/>
+
+    <!-- menu categories -->
+
+    <menuitem name="Listado de Artistas" id="music_management.menu_1" parent="music_management.menu_root"/>
+    <menuitem name="Listado de Usuarios" id="music_management.menu_2" parent="music_management.menu_root"/>
+    <menuitem name="Grafico de visitas" id="music_management.menu_3" parent="music_management.menu_root"/>
+
+    <!-- actions -->
+
+    <menuitem name="Listado de Artistas" id="music_management.menu_1_list" parent="music_management.menu_1"
+              action="music_management.action_window"/>
+
+    <menuitem name="Listado de Albums" id="music_management.menu_3_list" parent="music_management.menu_1"
+              action="music_management.action_window2"/>
+
+    <menuitem name="Listado de Canciones" id="music_management.menu_2_list" parent="music_management.menu_1"
+              action="music_management.action_window1"/>
+    <menuitem name="Listado de Generos" id ="music_management.menu_4_list" parent="music_management.menu_1"
+              action="music_management.action_window3"/>
+
+    <menuitem name="Listado de Usuarios" id ="music_management.menu_5_list" parent="music_management.menu_2"
+              action="music_management.action_window4"/>
+
+    <menuitem name="Listado de Comision" id ="music_management.menu_6_list" parent="music_management.menu_3"
+              action="music_management.action_window5"/>
+
+  </data>
+</odoo>
